@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>index</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" 
+         href="{% static 'style.css' %}">
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+
+        {% if messages %}
+		    {% for message in messages %}
+                <p class="flashmsg">{{ message }}</p>
+		    {% endfor %}
+        {% endif %}
+
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Uploaded Date</th>
+                <th>Data Delete</th>
+                <th>Graphing</th>
+            </tr>
+            {% for i in all_data %}
+                <tr>
+                    <td>{{ i.name }}</td>
+                    <td>{{ i.title }}</td>
+                    <td>{{ i.upload_date }}</td>
+                    <td>
+                        <a href="{% url 'delete' id=i.id %}" class="delete">データ削除</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'graph' id=i.id %}" class="graph">グラフ作成</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>データがありません</td>
+                    <td>データがありません</td>
+                    <td>データがありません</td>
+                    <td>N/A</td>
+                    <td>N/A</td>
+                </tr>
+            {% endfor %}            
+        </table>
+        <p>
+            <a href="{% url 'upload' %}" class="upload">アップロード</a> |
+            <a href="{% url 'dd' %}" class="dd">ダウンロード・削除</a> 
+        </p>
+        <hr size="5" noshade="" width="600" align="left">
+        <p>作成日 xx月xx日</p>
+    </body>
+</html>
